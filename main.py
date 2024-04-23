@@ -1,30 +1,54 @@
 import random
 
 #변수설정
-money=300000
-money_first=money
-day=0
-samsung_price=random.randint(40000,60000)
+money=300000 #초기 자금
+money_first=money 
+day=0 
+
+
+samsung_price=random.randint(40000,60000) #삼성의 초기주가
+lg_price=random.randint(150000,200000) #엘지의 초기주가
+han_price=random.randint(35000,45000) #한화의 초기주가
+lot_price=random.randint(60000,70000) #롯데의 초기주가
+doo_price=random.randint(9000,11000) #두산의 초기주가
+
 stock_have=0
-day_set=10
-yesterday_price=0
+day_set=10 #플레이 할 날짜
+yesterday_price=[0]*5 #0~4번 삼성~두산순서
 
 #삼성 주가 구하기함수
-def get_samsung_stock_price(randpercent,samsung_price):
+def get_samsung_stock_price(samsung_price):
+    randpercent=random.random()*10 #10퍼의 주가변동
+    randpercent*=random.choice([-1,1]) #부호결정
     samsung_price*=1+randpercent/100
     samsung_price="{:.0f}".format(samsung_price) #소숫점 짜르기
     samsung_price=int(samsung_price) #format쓰니까 문자열로 바뀜.
     return samsung_price
+
+#한화 주가 구하기함수
+def get_han_stock_price(han_price):
+    randpercent=random.random()*5 #5퍼의 주가변동
+    randpercent*=random.choice([-1,1]) #부호결정
+    han_price*=1+randpercent/100
+    han_price="{:.0f}".format(han_price) #소숫점 짜르기
+    han_price=int(han_price) #format쓰니까 문자열로 바뀜.
+    return han_price
+
+#롯데 주가 구하기함수
+
+#엘지 주가 구하기함수
+
+#두산 주가 구하기함수
     
 
 #게임진행
 while day<day_set:
-    #+-10퍼 주가변동
-    randpercent=random.random()*10
-    randpercent*=random.choice([-1,1])
-    #삼성주가 구하기
-    yesterday_price=samsung_price
-    samsung_price=get_samsung_stock_price(randpercent,samsung_price)
+    #각 회사의 금일 주가 구하기
+    yesterday_price[0]=samsung_price
+    samsung_price=get_samsung_stock_price(samsung_price)
+    han_price=get_samsung_stock_price(han_price)
+    
+    
     dif_price=samsung_price-yesterday_price
     day+=1
     if day==day_set:
